@@ -24,6 +24,7 @@ int sensor::get_distance_to_wall(int px, int py, int dir)
     int distance = -1;
     if (dir == UP)
     {
+        cout << "py: " << py << " px: " << px << endl;
         while (py >= 0 && maze[px][py] != 1)
         {
             py--;
