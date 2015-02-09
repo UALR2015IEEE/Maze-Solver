@@ -30,6 +30,7 @@ int main()
     //initialize maze
     if(!load_maze("maze.txt", maze) || !load_maze("maze.txt", str_maze))
     {
+        cout << "Error loading maze." << endl;
         return -1;
     }
 
