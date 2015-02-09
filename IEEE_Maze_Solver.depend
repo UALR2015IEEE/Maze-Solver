@@ -1,0 +1,57 @@
+# depslib dependency file v1.0
+1422952596 source:c:\users\zach\documents\codeblocks projects\ieee_maze_solver\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+
+1422957618 source:c:\users\zach\documents\codeblocks projects\ieee_maze_solver\src\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<vector>
+	<sstream>
+	"../include/sensor.h"
+
+1422957471 source:c:\users\zach\documents\codeblocks projects\ieee_maze_solver\src\sensor.cpp
+	"../include/sensor.h"
+
+1422956476 c:\users\zach\documents\codeblocks projects\ieee_maze_solver\include\sensor.h
+	<iostream>
+	<vector>
+	<string>
+	<sstream>
+	<cstdlib>
+
+1423436542 source:c:\users\zach\google drive\ieee_maze_solver\src\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<vector>
+	<sstream>
+	<windows.h>
+	"../include/sensor.h"
+	"../include/solver.h"
+
+1423012960 c:\users\zach\google drive\ieee_maze_solver\include\sensor.h
+	<iostream>
+	<vector>
+	<string>
+	<sstream>
+	<cstdlib>
+	"constants.h"
+
+1423352958 source:c:\users\zach\google drive\ieee_maze_solver\src\sensor.cpp
+	"../include/sensor.h"
+
+1423436450 source:c:\users\zach\google drive\ieee_maze_solver\src\solver.cpp
+	"solver.h"
+
+1423358601 c:\users\zach\google drive\ieee_maze_solver\include\solver.h
+	<iostream>
+	<algorithm>
+	<map>
+	<vector>
+	"constants.h"
+
+1423180559 c:\users\zach\google drive\ieee_maze_solver\include\constants.h
+
