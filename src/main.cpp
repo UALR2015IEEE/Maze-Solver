@@ -17,7 +17,7 @@ template<typename T>
 ostream& operator<< (ostream& out, const vector<T>& v);
 
 template<typename T>
-void load_maze(string name, vector<vector<T > >& maze);
+bool load_maze(string name, vector<vector<T > >& maze);
 
 void update_maze(vector<vector< string > >& maze, vector<cell> path, vector<cell> unvisited);
 
@@ -28,8 +28,10 @@ int main()
     vector<vector<string > > str_maze;
 
     //initialize maze
-    load_maze("maze.txt", maze);
-    load_maze("maze.txt", str_maze);
+    if(!load_maze("maze.txt", maze) || !load_maze("maze.txt", str_maze))
+    {
+        return -1;
+    }
 
     //set current position
     int px = 0;
@@ -95,7 +97,7 @@ int main()
     return 0;
 }
 template<typename T>
-void load_maze(string name, vector<vector<T > >& maze)
+bool load_maze(string name, vector<vector<T > >& maze)
 {
     cout << "Loading maze" << endl;
     ifstream maze_file;
@@ -115,6 +117,7 @@ void load_maze(string name, vector<vector<T > >& maze)
         }
         maze_file.close();
     }
+    else return false;
 
     cout << "maze allocated." << endl;
 
@@ -135,6 +138,9 @@ void load_maze(string name, vector<vector<T > >& maze)
         }
         maze_file.close();
     }
+    else return false;
+
+    return true;
 }
 
 std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems)
