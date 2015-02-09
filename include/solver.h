@@ -16,13 +16,12 @@ struct cell
     int visited = -1;
     bool traversed = false;
     bool onPath = false;
-    int distance = -1;
     int px = -1;
     int py = -1;
     vector<int> neighbors;
     cell() {}
     cell(int i, int x, int y) : id(i), px(x), py(y) {}
-    cell(int i, int x, int y, int v, int d) : id(i), px(x), py(y), visited(v), distance(d) {}
+    cell(int i, int x, int y, int v) : id(i), px(x), py(y), visited(v) {}
 
     bool operator==(cell& rhs)
     {

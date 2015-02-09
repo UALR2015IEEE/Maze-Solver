@@ -4,7 +4,7 @@ solver::solver(int s, int x, int y, int d)
 {
     //cstor
     direction = d;
-    maze.insert(pair<int, cell>(s, cell(s, x, y, 1, 0)));
+    maze.insert(pair<int, cell>(s, cell(s, x, y, 1)));
     current = maze[s];
 }
 
@@ -57,7 +57,6 @@ void solver::findNeighbors(int dleft, int dforward, int dright)
     //cout << "direction: " << direction << endl;
     int cx = current.px;
     int cy = current.py;
-    int cd = current.distance;
     int ci = current.id;
     if(dleft > 0 || dforward > 0 || dright > 0)
     {
@@ -78,7 +77,7 @@ void solver::findNeighbors(int dleft, int dforward, int dright)
             id = maze.size();
             //id = getCellId(x, y);
             //cout << "X: " << x << " Y: " << y << " ID: " << id << endl;
-            toInsert = cell(id, x, y, 0, cd+1);
+            toInsert = cell(id, x, y, 0);
             toInsert.neighbors.push_back(ci);
             maze.insert(pair<int, cell>(id, toInsert));
             maze.find(ci)->second.neighbors.push_back(id);
@@ -93,7 +92,7 @@ void solver::findNeighbors(int dleft, int dforward, int dright)
             id = maze.size();
             //id = getCellId(x, y);
             //cout << "X: " << x << " Y: " << y << " ID: " << id << endl;
-            toInsert = cell(id, x, y, 0, cd+1);
+            toInsert = cell(id, x, y, 0);
             toInsert.neighbors.push_back(ci);
             maze.insert(pair<int, cell>(id, toInsert));
             maze.find(ci)->second.neighbors.push_back(id);
@@ -108,7 +107,7 @@ void solver::findNeighbors(int dleft, int dforward, int dright)
             id = maze.size();
             //id = getCellId(x, y);
             //cout << "X: " << x << " Y: " << y << " ID: " << id << endl;
-            toInsert = cell(id, x, y, 0, cd+1);
+            toInsert = cell(id, x, y, 0);
             toInsert.neighbors.push_back(ci);
             maze.insert(pair<int, cell>(id, toInsert));
             maze.find(ci)->second.neighbors.push_back(id);
@@ -237,7 +236,7 @@ vector<instruction> solver::update_solver(int dleft, int dforward, int dright)
 
     path.clear();
 
-    cout << "unvisited size: " << unvisited.size() << endl;
+    //cout << "unvisited size: " << unvisited.size() << endl;
 
     if(unvisited.size() > 0)
     {
@@ -313,7 +312,7 @@ void solver::removeVisited()
 
 ostream& operator<< (ostream &out, const cell &rhs)
 {
-    out << "ID: " << rhs.id <<  " Visited: " << rhs.visited << " Distance: " << rhs.distance << " PX: " << rhs.px << " PY: " << rhs.py << endl;
+    out << "ID: " << rhs.id <<  " Visited: " << rhs.visited << " PX: " << rhs.px << " PY: " << rhs.py << endl;
 
     for (vector<int>::const_iterator it = rhs.neighbors.begin(); it != rhs.neighbors.end(); ++it)
     {
