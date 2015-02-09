@@ -69,17 +69,17 @@ int main()
 
         update_maze(str_maze, maze_solver->path, maze_solver->unvisited);
 
-        //cout << "maze updated" << endl;
-        //cout << str_maze << endl;
-        //cout << "left: " << left << endl;
-        //cout << "straight: " << straight << endl;
-        //cout << "right: " << right << endl;
-        //cout << "\nPX: " << px << " PY: " << py << " dir: " << dir << endl;
-        //cout << "instruction: " << endl;
+        cout << "maze updated" << endl;
+        cout << str_maze << endl;
+        cout << "left: " << left << endl;
+        cout << "straight: " << straight << endl;
+        cout << "right: " << right << endl;
+        cout << "\nPX: " << px << " PY: " << py << " dir: " << dir << endl;
+        cout << "instruction: " << endl;
 
         for(vector<instruction>::iterator it = i.begin(); it != i.end(); ++it)
         {
-            //cout << it->command << " " << it->value << endl;
+            cout << it->command << " " << it->value << endl;
         }
 
         //cout << "-------------------------\n" << endl;
@@ -87,8 +87,8 @@ int main()
     }
     while(!i.empty());
 
-    //maze_solver->printCells();
-    //cout << maze_solver->maze.size() << endl;
+    maze_solver->printCells();
+    cout << maze_solver->maze.size() << endl;
     delete maze_sensor;
     delete maze_solver;
 
