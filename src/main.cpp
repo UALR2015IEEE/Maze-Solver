@@ -49,7 +49,7 @@ int main()
     int right;
 
     maze_sensor->get_maze();
-    //cout << str_maze << endl;
+    cout << str_maze << endl;
 
     //cout << "distance left " << left << endl;
     //cout << "distance forward " << straight << endl;
