@@ -59,7 +59,7 @@ int main()
 
     do
     {
-
+        system("clear");
         dir = maze_solver->direction;
         px = maze_solver->current.px;
         py = maze_solver->current.py;
@@ -86,8 +86,8 @@ int main()
         }
 
         //cout << "-------------------------\n" << endl;
-        
-        system("clear");
+
+
 
     }
     while(!i.empty());
