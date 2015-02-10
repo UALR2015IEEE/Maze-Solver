@@ -70,10 +70,10 @@ int main()
 
         i = maze_solver->update_solver(left, straight, right);
 
-        update_maze(str_maze, maze_solver->path, maze_solver->unvisited);
+        //update_maze(str_maze, maze_solver->path, maze_solver->unvisited);
 
         cout << "maze updated" << endl;
-        cout << str_maze << endl;
+        //cout << str_maze << endl;
         cout << "left: " << left << endl;
         cout << "straight: " << straight << endl;
         cout << "right: " << right << endl;
