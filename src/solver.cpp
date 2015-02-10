@@ -190,8 +190,8 @@ vector<instruction> solver::generateInstructions()
         {
             cell c1 = *it;
             cell c2 = *(++it);
-            //cout << "c1: " << c1 << endl;
-            //cout << "c2: " << c2 << endl;
+            cout << "c1 *it: " << c1 << endl;
+            cout << "c2 *(++it): " << c2 << endl;
 
             //need to turn left
             if(c1.px > c2.px && dir != LEFT)
@@ -222,7 +222,9 @@ vector<instruction> solver::generateInstructions()
         }
     }
     direction = dir;
+
     current = path.back();
+    cout << "current: " << current << endl;
     return inst;
 }
 
