@@ -48,12 +48,12 @@ int main()
     int straight;
     int right;
 
-    //cout << maze_sensor->get_maze() << endl;
-    //cout << str_maze << endl;
+    cout << maze_sensor->get_maze() << endl;
+    cout << str_maze << endl;
 
-    //cout << "distance left " << left << endl;
-    //cout << "distance forward " << straight << endl;
-    //cout << "distance right " << right << endl;
+    cout << "distance left " << left << endl;
+    cout << "distance forward " << straight << endl;
+    cout << "distance right " << right << endl;
 
     vector<instruction> i;
 
