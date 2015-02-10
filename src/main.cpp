@@ -19,16 +19,13 @@ ostream& operator<< (ostream& out, const vector<T>& v);
 template<typename T>
 bool load_maze(string name, vector<vector<T > >& maze);
 
-void update_maze(vector<vector< string > >& maze, vector<cell> path, vector<cell> unvisited);
-
 int main()
 {
     //initialize maze vector
     vector<vector<int > > maze;
-    vector<vector<string > > str_maze;
-
+    
     //initialize maze
-    if(!load_maze("maze.txt", maze) || !load_maze("maze.txt", str_maze))
+    if(!load_maze("maze.txt", maze))
     {
         cout << "Error loading maze." << endl;
         return -1;
@@ -49,11 +46,6 @@ int main()
     int right;
 
     maze_sensor->get_maze();
-    cout << str_maze << endl;
-
-    //cout << "distance left " << left << endl;
-    //cout << "distance forward " << straight << endl;
-    //cout << "distance right " << right << endl;
 
     vector<instruction> i;
 
@@ -69,24 +61,6 @@ int main()
         right = maze_sensor->get_distance_to_wall(px, py, dir+1);
 
         i = maze_solver->update_solver(left, straight, right);
-
-        update_maze(str_maze, maze_solver->path, maze_solver->unvisited);
-
-        cout << "maze updated" << endl;
-        cout << str_maze << endl;
-        cout << "left: " << left << endl;
-        cout << "straight: " << straight << endl;
-        cout << "right: " << right << endl;
-        cout << "\nPX: " << px << " PY: " << py << " dir: " << dir << endl;
-        cout << "instruction: " << endl;
-
-        for(vector<instruction>::iterator it = i.begin(); it != i.end(); ++it)
-        {
-            cout << it->command << " " << it->value << endl;
-        }
-
-        cout << "-------------------------\n" << endl;
-
 
     }
     while(!i.empty());
@@ -134,7 +108,8 @@ bool load_maze(string name, vector<vector<T > >& maze)
 
             for (unsigned int i=0; i<x.size(); i++)
             {
-                maze[i][y] = stoi(x[i]);
+                istringstream buffer(x[i]);
+                buffer >> maze[i][y];
             }
             y++;
         }
@@ -161,46 +136,4 @@ std::vector<std::string> split(const std::string &s, char delim)
     std::vector<std::string> elems;
     split(s, delim, elems);
     return elems;
-}
-
-template<typename T>
-ostream& operator<< (ostream& out, const vector<T>& v)
-{
-    size_t last = v.size() - 1;
-    for(size_t i = 0; i < v.size(); ++i)
-    {
-        for(size_t j = 0; j < v[i].size(); ++j)
-        {
-            ostringstream oss;
-            oss << v[j][i];
-            string s = oss.str();
-            if(s.compare("x")!=0 && s.compare("o")!=0 && s.compare("c")!=0)
-            {
-              out << "*";
-            }
-            else out << v[j][i];
-            if (j != last)
-                out << " ";
-            else
-                out << "\n";
-        }
-    }
-    out << "\n";
-    return out;
-}
-
-void update_maze(vector<vector< string > >& maze, vector<cell> path, vector<cell> unvisited)
-{
-    if(!path.empty())
-    {
-        for (vector<cell>::iterator it = path.begin(); it != path.end(); ++it)
-        {
-            maze[it->px][it->py] = "x";
-        }
-        for (vector<cell>::iterator it = unvisited.begin(); it != unvisited.end(); ++it)
-        {
-            maze[it->px][it->py] = "o";
-        }
-        maze[path.back().px][path.back().py] = "c";
-    }
 }
