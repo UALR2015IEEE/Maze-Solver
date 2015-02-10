@@ -25,9 +25,10 @@ int main()
 {
     //initialize maze vector
     vector<vector<int > > maze;
+    vector<vector<string > > str_maze;
 
     //initialize maze
-    if(!load_maze("maze.txt", maze))
+    if(!load_maze("maze.txt", maze) || !load_maze("maze.txt", str_maze))
     {
         cout << "Error loading maze." << endl;
         return -1;
@@ -47,6 +48,8 @@ int main()
     int straight;
     int right;
 
+    maze_sensor->get_maze();
+    cout << str_maze << endl;
 
     //cout << "distance left " << left << endl;
     //cout << "distance forward " << straight << endl;
@@ -67,21 +70,22 @@ int main()
 
         i = maze_solver->update_solver(left, straight, right);
 
+        update_maze(str_maze, maze_solver->path, maze_solver->unvisited);
 
-        //cout << "maze updated" << endl;
+        cout << "maze updated" << endl;
+        cout << str_maze << endl;
+        cout << "left: " << left << endl;
+        cout << "straight: " << straight << endl;
+        cout << "right: " << right << endl;
+        cout << "\nPX: " << px << " PY: " << py << " dir: " << dir << endl;
+        cout << "instruction: " << endl;
 
-        //cout << "left: " << left << endl;
-        //cout << "straight: " << straight << endl;
-        //cout << "right: " << right << endl;
-        //cout << "\nPX: " << px << " PY: " << py << " dir: " << dir << endl;
-        //cout << "instruction: " << endl;
+        for(vector<instruction>::iterator it = i.begin(); it != i.end(); ++it)
+        {
+            cout << it->command << " " << it->value << endl;
+        }
 
-        //for(vector<instruction>::iterator it = i.begin(); it != i.end(); ++it)
-        //{
-        //cout << it->command << " " << it->value << endl;
-        //}
-
-        //cout << "-------------------------\n" << endl;
+        cout << "-------------------------\n" << endl;
 
 
     }
