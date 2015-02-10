@@ -85,7 +85,7 @@ int main()
             cout << it->command << " " << it->value << endl;
         }
 
-        //cout << "-------------------------\n" << endl;
+        cout << "-------------------------\n" << endl;
 
 
 
