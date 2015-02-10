@@ -69,20 +69,20 @@ int main()
 
 
         //cout << "maze updated" << endl;
-        /*
-        cout << "left: " << left << endl;
-        cout << "straight: " << straight << endl;
-        cout << "right: " << right << endl;
-        cout << "\nPX: " << px << " PY: " << py << " dir: " << dir << endl;
-        cout << "instruction: " << endl;
 
-        for(vector<instruction>::iterator it = i.begin(); it != i.end(); ++it)
-        {
-            cout << it->command << " " << it->value << endl;
-        }
+        //cout << "left: " << left << endl;
+        //cout << "straight: " << straight << endl;
+        //cout << "right: " << right << endl;
+        //cout << "\nPX: " << px << " PY: " << py << " dir: " << dir << endl;
+        //cout << "instruction: " << endl;
 
-        cout << "-------------------------\n" << endl;
-        */
+        //for(vector<instruction>::iterator it = i.begin(); it != i.end(); ++it)
+        //{
+        //cout << it->command << " " << it->value << endl;
+        //}
+
+        //cout << "-------------------------\n" << endl;
+
 
     }
     while(!i.empty());
