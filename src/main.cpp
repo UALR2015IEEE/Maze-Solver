@@ -68,7 +68,9 @@ int main()
         straight = maze_sensor->get_distance_to_wall(px, py, dir);
         right = maze_sensor->get_distance_to_wall(px, py, dir+1);
 
+        cout << "updating solver" << endl;
         i = maze_solver->update_solver(left, straight, right);
+        cout << "solver updated" << endl;
 
         update_maze(str_maze, maze_solver->path, maze_solver->unvisited);
 
@@ -172,7 +174,14 @@ ostream& operator<< (ostream& out, const vector<T>& v)
     {
         for(size_t j = 0; j < v[i].size(); ++j)
         {
-            out << v[j][i];
+            ostringstream oss;
+            oss << v[j][i];
+            string s = oss.str();
+            if(s.compare("x")!=0 && s.compare("o")!=0 && s.compare("c")!=0)
+            {
+              out << "*";
+            }
+            else out << v[j][i];
             if (j != last)
                 out << " ";
             else
