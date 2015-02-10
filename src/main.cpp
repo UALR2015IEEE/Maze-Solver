@@ -48,12 +48,12 @@ int main()
     int straight;
     int right;
 
-    //cout << maze_sensor->get_maze() << endl;
-    //cout << str_maze << endl;
+    cout << maze_sensor->get_maze() << endl;
+    cout << str_maze << endl;
 
-    //cout << "distance left " << left << endl;
-    //cout << "distance forward " << straight << endl;
-    //cout << "distance right " << right << endl;
+    cout << "distance left " << left << endl;
+    cout << "distance forward " << straight << endl;
+    cout << "distance right " << right << endl;
 
     vector<instruction> i;
 
@@ -71,7 +71,7 @@ int main()
         i = maze_solver->update_solver(left, straight, right);
 
         update_maze(str_maze, maze_solver->path, maze_solver->unvisited);
-        /*
+
         cout << "maze updated" << endl;
         cout << str_maze << endl;
         cout << "left: " << left << endl;
@@ -86,7 +86,7 @@ int main()
         }
 
         cout << "-------------------------\n" << endl;
-        */
+
 
     }
     while(!i.empty());
@@ -101,7 +101,7 @@ int main()
 template<typename T>
 bool load_maze(string name, vector<vector<T > >& maze)
 {
-    //cout << "Loading maze" << endl;
+    cout << "Loading maze" << endl;
     ifstream maze_file;
     string line;
 
@@ -121,7 +121,7 @@ bool load_maze(string name, vector<vector<T > >& maze)
     }
     else return false;
 
-    //cout << "maze allocated." << endl;
+    cout << "maze allocated." << endl;
 
     maze_file.open(name.c_str());
     //load maze into maze vector
