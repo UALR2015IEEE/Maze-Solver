@@ -86,6 +86,8 @@ int main()
         }
 
         //cout << "-------------------------\n" << endl;
+        
+        system("clear");
 
     }
     while(!i.empty());
