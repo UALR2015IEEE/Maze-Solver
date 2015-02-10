@@ -71,7 +71,7 @@ int main()
         i = maze_solver->update_solver(left, straight, right);
 
         update_maze(str_maze, maze_solver->path, maze_solver->unvisited);
-
+        /*
         cout << "maze updated" << endl;
         cout << str_maze << endl;
         cout << "left: " << left << endl;
@@ -86,7 +86,7 @@ int main()
         }
 
         cout << "-------------------------\n" << endl;
-
+        */
 
     }
     while(!i.empty());
