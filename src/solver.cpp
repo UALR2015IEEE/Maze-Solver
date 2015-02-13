@@ -13,6 +13,39 @@ solver::~solver()
     //dstor
 }
 
+cell solver::getCurrent()
+{
+  return current;
+}
+
+map<int, cell> solver::getMaze()
+{
+  return maze;
+}
+
+int solver::getDirection()
+{
+  return direction;
+}
+
+vector<int> solver::getVisited()
+{
+  vector<int> visited;
+  for(map<int, cell>::iterator it = maze.begin(); it != maze.end(); ++it)
+  {
+    cell current = it->second;
+    for(vector<int>::iterator nit = current.neighbors.begin(); nit != current.neighbors.end(); ++nit)
+    {
+      cell neighbor = maze.find(*nit)->second;
+      if(neighbor.visited > 0)
+      {
+        visited.push_back(*nit);
+      }
+    }
+  }
+  return visited;
+}
+
 int solver::parseDirection(int d)
 {
     int toReturn = (direction+d)%4;
@@ -74,8 +107,8 @@ void solver::findNeighbors(int dleft, int dforward, int dright)
             //cout << "space direction: " << parseDirection(-1) << endl;
             x = cx+parseX(-1);
             y = cy+parseY(-1);
-            id = maze.size();
-            //id = getCellId(x, y);
+            //id = maze.size();
+            id = getCellId(x, y);
             //cout << "X: " << x << " Y: " << y << " ID: " << id << endl;
             toInsert = cell(id, x, y, 0);
             toInsert.neighbors.push_back(ci);
@@ -89,8 +122,8 @@ void solver::findNeighbors(int dleft, int dforward, int dright)
             //cout << "space direction: " << parseDirection(0) << endl;
             x = cx+parseX(0);
             y = cy+parseY(0);
-            id = maze.size();
-            //id = getCellId(x, y);
+            //id = maze.size();
+            id = getCellId(x, y);
             //cout << "X: " << x << " Y: " << y << " ID: " << id << endl;
             toInsert = cell(id, x, y, 0);
             toInsert.neighbors.push_back(ci);
@@ -104,8 +137,8 @@ void solver::findNeighbors(int dleft, int dforward, int dright)
             //cout << "space direction: " << parseDirection(1) << endl;
             x = cx+parseX(1);
             y = cy+parseY(1);
-            id = maze.size();
-            //id = getCellId(x, y);
+            //id = maze.size();
+            id = getCellId(x, y);
             //cout << "X: " << x << " Y: " << y << " ID: " << id << endl;
             toInsert = cell(id, x, y, 0);
             toInsert.neighbors.push_back(ci);
@@ -184,36 +217,42 @@ vector<instruction> solver::generateInstructions()
 {
     int dir = direction;
     vector<instruction> inst;
+    //cout << "path length: " << path.size() << endl;
+    if(path.size() > 0){
     for (vector<cell>::iterator it = path.begin(); it != path.end(); ++it)
     {
         if(*it != path.back())
         {
             cell c1 = *it;
-            cell c2 = *(++it);
+            cell c2 = *(it+1);
             //cout << "c1 *it: " << c1 << endl;
-            //cout << "c2 *(++it): " << c2 << endl;
+            //cout << "c2 *(it+1): " << c2 << endl;
 
             //need to turn left
             if(c1.px > c2.px && dir != LEFT)
             {
+                //cout << "turning left" << endl;
                 inst.push_back(generateRotateAmount(dir, LEFT));
                 dir = LEFT;
             }
             //need to turn right
             else if(c1.px < c2.px && dir != RIGHT)
             {
+                //cout << "turning right" << endl;
                 inst.push_back(generateRotateAmount(dir, RIGHT));
                 dir = RIGHT;
             }
             //need to turn up
             else if(c1.py > c2.py && dir != UP)
             {
+                //cout << "turning up" << endl;
                 inst.push_back(generateRotateAmount(dir, UP));
                 dir = UP;
             }
             //need to turn down
             else if(c1.py < c2.py && dir != DOWN)
             {
+                //cout << "turning down" << endl;
                 inst.push_back(generateRotateAmount(dir, DOWN));
                 dir = DOWN;
             }
@@ -222,9 +261,13 @@ vector<instruction> solver::generateInstructions()
         }
     }
     direction = dir;
-
+    for(vector<instruction>::iterator it = inst.begin(); it != inst.end(); ++it)
+    {
+      //cout << "instruction: " << it->command << " value: " << it->value << endl;
+    }
     current = path.back();
     //cout << "current: " << current << endl;
+  }
     return inst;
 }
 
@@ -233,7 +276,6 @@ vector<instruction> solver::update_solver(int dleft, int dforward, int dright)
 
     findNeighbors(dleft, dforward, dright);
 
-    updateVisited();
     removeVisited();
 
     path.clear();
@@ -253,9 +295,33 @@ vector<instruction> solver::update_solver(int dleft, int dforward, int dright)
     }
 
     updateVisited();
-    removeVisited();
 
     return generateInstructions();
+}
+
+vector<instruction> solver::go_to_end()
+{
+  path.clear();
+  if ( maze.find(1) != maze.end())
+  {
+    resetCells();
+    findPath(current, maze.find(1)->second);
+  }
+  else
+  {
+    resetCells();
+    findPath(current, maze.find(9)->second);
+  }
+
+  return generateInstructions();
+}
+
+vector<instruction> solver::go_to_start()
+{
+  path.clear();
+  resetCells();
+  findPath(current, maze.find(48)->second);
+  return generateInstructions();
 }
 
 int solver::getCellId(int x, int y)
