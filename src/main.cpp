@@ -4,7 +4,6 @@
 #include <vector>
 #include <sstream>
 #include <map>
-#include <unistd.h>
 
 #include "../include/sensor.h"
 #include "../include/solver.h"
@@ -64,7 +63,6 @@ int main()
     do
     {
 
-        system("clear");
         dir = maze_solver->getDirection();
         current = maze.find(maze_solver->getCurrent().id)->second;
 
@@ -83,26 +81,22 @@ int main()
         cout << "left: " << left << " straight: " << straight << " right: " << right << endl << endl;;
 
         i = maze_solver->update_solver(left, straight, right);
-        usleep(200000);
 
     }
     while(!i.empty());
-
-    system("clear");
 
     cout << "PATHING TO END OF MAZE: " << endl;
     i = maze_solver->go_to_end();
     current = maze.find(maze_solver->getCurrent().id)->second;
     updateMaze(str_maze, maze_solver->getMaze(), maze_solver->getVisited(), current);
     printMaze(str_maze, maze);
-    usleep(200000);
 
+    
     cout << "\n\nPATHING TO BEGINNING OF MAZE: " << endl;
     i = maze_solver->go_to_start();
     current = maze.find(maze_solver->getCurrent().id)->second;
     updateMaze(str_maze, maze_solver->getMaze(), maze_solver->getVisited(), current);
     printMaze(str_maze, maze);
-    usleep(200000);
 
     //maze_solver->printCells();
     //cout << maze_solver->getMaze().size() << endl;
