@@ -4,7 +4,7 @@
 #include <vector>
 #include <sstream>
 #include <map>
-#include <unistd.h>
+#include <windows.h>
 
 #include "../include/sensor.h"
 #include "../include/solver.h"
@@ -64,7 +64,7 @@ int main()
     do
     {
 
-        system("clear");
+        system("cls");
         dir = maze_solver->getDirection();
         current = maze.find(maze_solver->getCurrent().id)->second;
 
@@ -83,12 +83,12 @@ int main()
         cout << "left: " << left << " straight: " << straight << " right: " << right << endl << endl;;
 
         i = maze_solver->update_solver(left, straight, right);
-        usleep(200000);
+        Sleep(1000);
 
     }
     while(!i.empty());
 
-    system("clear");
+    system("cls");
 
     cout << "PATHING TO END OF MAZE: " << endl;
     i = maze_solver->go_to_end();
