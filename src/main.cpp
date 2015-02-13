@@ -95,6 +95,10 @@ int main()
     current = maze.find(maze_solver->getCurrent().id)->second;
     updateMaze(str_maze, maze_solver->getMaze(), maze_solver->getVisited(), current);
     printMaze(str_maze, maze);
+    for(vector<instruction>::iterator it = i.begin(); it != i.end(); ++it)
+    {
+      cout << "instruction: " << it->command << " value: " << it->value << endl;
+    }
     usleep(200000);
 
     cout << "\n\nPATHING TO BEGINNING OF MAZE: " << endl;
@@ -102,6 +106,10 @@ int main()
     current = maze.find(maze_solver->getCurrent().id)->second;
     updateMaze(str_maze, maze_solver->getMaze(), maze_solver->getVisited(), current);
     printMaze(str_maze, maze);
+    for(vector<instruction>::iterator it = i.begin(); it != i.end(); ++it)
+    {
+      cout << "instruction: " << it->command << " value: " << it->value << endl;
+    }
     usleep(200000);
 
     //maze_solver->printCells();
@@ -159,7 +167,7 @@ void initMaze(vector<vector< string > >& str_maze, map<int, cell> maze)
     str_maze.push_back(vector<string>());
     for(unsigned int x = 0; x < mY; x++)
     {
-      str_maze[y].push_back(" ");
+      str_maze[y].push_back("■");
     }
   }
 }
