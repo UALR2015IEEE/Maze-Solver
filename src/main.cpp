@@ -8,6 +8,7 @@
 
 #include "../include/sensor.h"
 #include "../include/solver.h"
+#include "../include/serial.h"
 
 using namespace std;
 

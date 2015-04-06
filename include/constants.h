@@ -3,9 +3,7 @@
 
 using namespace std;
 
-const int UP = 0;
-const int RIGHT = 1;
-const int DOWN = 2;
-const int LEFT = 3;
+enum DIRECTION {UP=0, RIGHT=1, DOWN=2, LEFT=3};
+enum COMMANDS {MOVE=0, ROTATE=1, LIGHT=2};
 
 #endif // CONSTANTS_H_INCLUDED

@@ -64,7 +64,7 @@ struct instruction
 {
     int command;
     int value;
-    //command = 1 -> move forward, command = 2 -> rotate
+    //command = 1 -> move, command = 2 -> rotate, command = 3 -> light
     //value = (command) number of blocks to move forward, (rotate) number of 90* rotations
     instruction(int c, int v) : command(c), value(v) {}
     instruction()
