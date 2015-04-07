@@ -6,6 +6,7 @@
 #include <map>
 #include <unistd.h>
 
+#include "constants.h"
 #include "../include/sensor.h"
 #include "../include/solver.h"
 #include "../include/serial.h"
@@ -29,8 +30,21 @@ void updateMaze(vector<vector< string > >& str_maze, map<int, cell> maze, vector
 void initMaze(vector<vector< string > >& str_maze, map<int, cell> maze);
 void printMaze(vector<vector< string > > str_maze, map<int, cell> maze);
 
+void execute(serial* s, vector<instruction> i);
+
 int main()
 {
+    //construct serial connection
+    serial* s = new serial();
+
+    //check to see if connection opened; exit otherwise
+    if(!s->open()) return -1;
+
+    //wait for button
+    while(!s->get_button()) {}
+
+    data* d = new data();
+
     //initialize maze vector
     map<int, cell> maze;
 
@@ -49,7 +63,7 @@ int main()
     int py = 0;
 
     //directions - 0=up, 1=right, 2=down, 3=left
-    int dir = 2;
+    DIRECTION dir = DOWN;
     int id = 48;
 
     sensor *maze_sensor = new sensor(maze);
@@ -69,9 +83,7 @@ int main()
         dir = maze_solver->getDirection();
         current = maze.find(maze_solver->getCurrent().id)->second;
 
-        left = maze_sensor->get_distance_to_wall(current, dir-1);
-        straight = maze_sensor->get_distance_to_wall(current, dir);
-        right = maze_sensor->get_distance_to_wall(current, dir+1);
+        d = maze_sensor->get_distances(current, dir);
 
         //cout << "current: " << current;
         //maze_solver->printUnvisited();
@@ -83,7 +95,10 @@ int main()
         cout << "dir: " << dir << endl;
         cout << "left: " << left << " straight: " << straight << " right: " << right << endl << endl;;
 
-        i = maze_solver->update_solver(left, straight, right);
+        i = maze_solver->update_solver(d);
+
+        execute(s, i);
+
         usleep(200000);
 
     }
@@ -93,6 +108,8 @@ int main()
 
     cout << "PATHING TO END OF MAZE: " << endl;
     i = maze_solver->go_to_end();
+    i.push_back(instruction(LIGHT, 1));
+    i.push_back(instruction(LIGHT, 0));
     current = maze.find(maze_solver->getCurrent().id)->second;
     updateMaze(str_maze, maze_solver->getMaze(), maze_solver->getVisited(), current);
     printMaze(str_maze, maze);
@@ -100,10 +117,13 @@ int main()
     {
       cout << "instruction: " << it->command << " value: " << it->value << endl;
     }
+    execute(s, i);
     usleep(200000);
 
     cout << "\n\nPATHING TO BEGINNING OF MAZE: " << endl;
     i = maze_solver->go_to_start();
+    i.push_back(instruction(LIGHT, 1));
+    i.push_back(instruction(LIGHT, 0));
     current = maze.find(maze_solver->getCurrent().id)->second;
     updateMaze(str_maze, maze_solver->getMaze(), maze_solver->getVisited(), current);
     printMaze(str_maze, maze);
@@ -111,6 +131,7 @@ int main()
     {
       cout << "instruction: " << it->command << " value: " << it->value << endl;
     }
+    execute(s, i);
     usleep(200000);
 
     //maze_solver->printCells();
@@ -119,8 +140,38 @@ int main()
 
     delete maze_sensor;
     delete maze_solver;
+    delete s;
+    delete d;
 
     return 0;
+}
+
+void execute(serial* s, vector<instruction> i)
+{
+    for(vector<instruction>::iterator it = i.begin(); it != i.end(); ++it)
+    {
+      switch(it->command){
+        case MOVE:
+        {
+          s->move(it->value);
+          break;
+        }
+        case ROTATE:
+        {
+          s->rotate(it->value);
+          break;
+        }
+        case LIGHT:
+        {
+          s->set_light(it->value);
+          break;
+        }
+        case NA:
+        {
+          break;
+        }
+      }
+    }
 }
 
 int findMaxX(map<int, cell> maze)

@@ -18,6 +18,7 @@ class sensor
     public:
         sensor(map<int, cell> m);
         map<int, cell> get_maze();
+        data* get_distances(cell c, DIRECTION d);
         int get_distance_to_wall(cell c, int dir);
         virtual ~sensor();
     protected:

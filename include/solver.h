@@ -60,33 +60,19 @@ struct cell
     }
 };
 
-struct instruction
-{
-    int command;
-    int value;
-    //command = 1 -> move, command = 2 -> rotate, command = 3 -> light
-    //value = (command) number of blocks to move forward, (rotate) number of 90* rotations
-    instruction(int c, int v) : command(c), value(v) {}
-    instruction()
-    {
-      command = -1;
-      value = -1;
-    }
-};
-
 ostream& operator<< (ostream &out, const cell &rhs);
 
 class solver
 {
     public:
-        solver(int s, int x, int y, int d);
-        vector<instruction> update_solver(int dleft, int dforward, int dright);
+        solver(int s, int x, int y, DIRECTION d);
+        vector<instruction> update_solver(data* d);
         vector<instruction> go_to_end();
         vector<instruction> go_to_start();
         void printCells();
         void printUnvisited();
         cell getCurrent();
-        int getDirection();
+        DIRECTION getDirection();
         map<int, cell> getMaze();
         vector<int> getVisited();
 
@@ -96,7 +82,7 @@ class solver
         map<int, cell> maze;
         vector<cell> path;
         vector<cell> unvisited;
-        int direction;
+        DIRECTION direction;
         cell current;
 
         instruction generateRotateAmount(int c1, int c2);

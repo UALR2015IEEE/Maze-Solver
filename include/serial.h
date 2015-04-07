@@ -16,12 +16,13 @@ class serial
         serial();
         virtual ~serial();
 
+        bool open();
         void move(int p);
         void rotate(int r);
         void set_light(bool l);
 
-        bool get_switch(void);
-        COMMANDS get_status();
+        bool get_button(void);
+        data* get_status();
 
     private:
 

@@ -1,6 +1,6 @@
 #include "solver.h"
 
-solver::solver(int s, int x, int y, int d)
+solver::solver(int s, int x, int y, DIRECTION d)
 {
     //cstor
     direction = d;
@@ -23,7 +23,7 @@ map<int, cell> solver::getMaze()
   return maze;
 }
 
-int solver::getDirection()
+DIRECTION solver::getDirection()
 {
   return direction;
 }
@@ -198,24 +198,24 @@ instruction solver::generateRotateAmount(int c1, int c2)
     {
         if( (c2-c1) <= (3+c1-abs(c1-c2)) )
         {
-            return instruction(2, (c2-c1));
+            return instruction(ROTATE, (c2-c1));
         }
-        else return instruction(2, -(4+c1-abs(c1-c2)));
+        else return instruction(ROTATE, -(4+c1-abs(c1-c2)));
     }
     else if(c1 > c2)
     {
         if( (c1-c2) <= (3+c2-abs(c1-c2)) )
         {
-            return instruction(2, -(c1-c2));
+            return instruction(ROTATE, -(c1-c2));
         }
-        else return instruction(2, (4+c2-abs(c1-c2)));
+        else return instruction(ROTATE, (4+c2-abs(c1-c2)));
     }
-    return instruction(2, 0);
+    return instruction(ROTATE, 0);
 }
 
 vector<instruction> solver::generateInstructions()
 {
-    int dir = direction;
+    DIRECTION dir = direction;
     vector<instruction> inst;
     //cout << "path length: " << path.size() << endl;
     if(path.size() > 0){
@@ -257,7 +257,7 @@ vector<instruction> solver::generateInstructions()
                 dir = DOWN;
             }
             //move forward one block'
-            inst.push_back(instruction(1, 1));
+            inst.push_back(instruction(MOVE, 1));
         }
     }
     direction = dir;
@@ -271,8 +271,11 @@ vector<instruction> solver::generateInstructions()
     return inst;
 }
 
-vector<instruction> solver::update_solver(int dleft, int dforward, int dright)
+vector<instruction> solver::update_solver(data* d)
 {
+    int dleft = d->left;
+    int dright = d->right;
+    int dforward = d->forward;
 
     findNeighbors(dleft, dforward, dright);
 

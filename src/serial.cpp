@@ -10,6 +10,12 @@ serial::~serial()
     //dtor
 }
 
+
+bool serial::open()
+{
+    return true;
+}
+
 void serial::move(int p)
 {
 
@@ -25,13 +31,13 @@ void serial::set_light(bool l)
 
 }
 
-bool serial::get_switch(void)
+bool serial::get_button(void)
 {
-    return 0;
+    return true;
 }
 
-COMMANDS serial::get_status(void)
+data* serial::get_status(void)
 {
-    COMMANDS c = MOVE;
-    return c;
+    data* d = new data();
+    return d;
 }
