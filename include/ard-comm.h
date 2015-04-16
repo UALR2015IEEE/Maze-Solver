@@ -5,27 +5,28 @@
 #include <algorithm>
 #include <map>
 #include <vector>
-
 #include "constants.h"
+#include "serial.h"
+#include "string.h"
 
 using namespace std;
 
-class serial
+class ardComm
 {
     public:
-        serial();
-        virtual ~serial();
+        ardComm();
+        virtual ~ardComm();
 
         bool open();
         void move(int p);
         void rotate(int r);
-        void set_light(bool l);
+        void set_light(int l);
 
         bool get_button(void);
         data* get_status();
 
     private:
-
+        Serial ard;
 };
 
 #endif // SERIAL_H

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <string>
+#include <string.h>
 #include <vector>
 #include <sstream>
 #include <map>
@@ -9,7 +9,7 @@
 #include "constants.h"
 #include "../include/sensor.h"
 #include "../include/solver.h"
-#include "../include/serial.h"
+#include "ard-comm.h"
 
 using namespace std;
 
@@ -30,12 +30,12 @@ void updateMaze(vector<vector< string > >& str_maze, map<int, cell> maze, vector
 void initMaze(vector<vector< string > >& str_maze, map<int, cell> maze);
 void printMaze(vector<vector< string > > str_maze, map<int, cell> maze);
 
-void execute(serial* s, vector<instruction> i);
+void execute(ardComm * s, vector<instruction> i);
 
 int main()
 {
-    //construct serial connection
-    serial* s = new serial();
+    //construct ard-comm connection
+    ardComm* s = new ardComm();
 
     //check to see if connection opened; exit otherwise
     if(!s->open()) return -1;
@@ -146,7 +146,7 @@ int main()
     return 0;
 }
 
-void execute(serial* s, vector<instruction> i)
+void execute(ardComm * s, vector<instruction> i)
 {
     for(vector<instruction>::iterator it = i.begin(); it != i.end(); ++it)
     {
@@ -219,7 +219,7 @@ void initMaze(vector<vector< string > >& str_maze, map<int, cell> maze)
     str_maze.push_back(vector<string>());
     for(unsigned int x = 0; x < mY; x++)
     {
-      str_maze[y].push_back("■");
+      str_maze[y].push_back("?");
     }
   }
 }
