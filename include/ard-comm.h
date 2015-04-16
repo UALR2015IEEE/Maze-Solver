@@ -1,14 +1,13 @@
 #ifndef SERIAL_H
 #define SERIAL_H
 
-#include <iostream>
 #include <algorithm>
 #include <map>
 #include <vector>
-#include <fstream>
-#include <fcntl.h
+#include <cstdio>
+#include <fcntl.h>
 #include "constants.h"
-#include "string.h"
+#include <string.h>
 
 using namespace std;
 
@@ -18,7 +17,7 @@ class ardComm
         ardComm();
         virtual ~ardComm();
 
-        bool open();
+        bool fopen();
         void move(int p);
         void rotate(int r);
         void set_light(int l);
@@ -29,7 +28,7 @@ class ardComm
     private:
         int fd1;
         int fd2;
-        char * buff = new char[2];
+        char* buff;
         int wr, rd, nbytes, tries;
 };
 

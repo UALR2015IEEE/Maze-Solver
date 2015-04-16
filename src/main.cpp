@@ -38,7 +38,7 @@ int main()
     ardComm* s = new ardComm();
 
     //check to see if connection opened; exit otherwise
-    if(!s->open()) return -1;
+    if(!s->fopen()) return -1;
 
     //wait for button
     while(!s->get_button()) {}
