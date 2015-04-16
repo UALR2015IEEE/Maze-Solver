@@ -1,3 +1,4 @@
+#include <sys/unistd.h>
 #include "../include/ard-comm.h"
 
 
@@ -14,39 +15,40 @@ ardComm::~ardComm()
 
 bool ardComm::open()
 {
-    ard = Serial("/dev/ttyUSB0", 155200);
-    ard.open();
-    return true;
+    fcntl(fd1, F_SETFL, O_NONBLOCK);
+    fd1 = open("/dev/ttyUSB0", O_RDWR | O_NONBLOCK);
+    usleep(1000*1000*100);
+    return fd1 != -1;
 }
 
 void ardComm::move(int p)
 {
-    ard.write("!"+to_string(p)+"\n");
+    write(fd1, "!"+to_string(p)+"\n", 3);
 }
 
 void ardComm::rotate(int r)
 {
-    ard.write("@"+to_sting(r)+"\n");
+    write(fd1, "@"+to_sting(r)+"\n", 3);
 }
 
 void ardComm::set_light(int l)
 {
-    ard.write("^"+to_sting(l)+"\n");
+    write(fd1, "^"+to_sting(l)+"\n", 3);
 }
 
 bool ardComm::get_button(void)
 {
-    ard.write("r\n");
-    string res = ard.readline();
+    write(fd1, "r\n", 2);
+    string res = read(fd1, buff, 1);
     return res == "1";
 }
 
 data* ardComm::get_status(void)
 {
     data* d = new data();
-    ard.write("?\n");
-    d->left = atoi(ard.read(1));
-    d->right = atoi(ard.read(1));
-    d->forward = atoi(ard.read(1));
+    write(fd1, "?\n", 2);
+    d->left = atoi(read(fd1, buff, 1));
+    d->right = atoi(read(fd1, buff, 1));
+    d->forward = atoi(read(fd1, buff, 1));
     return d;
 }

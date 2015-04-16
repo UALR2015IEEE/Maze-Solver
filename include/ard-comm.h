@@ -5,8 +5,9 @@
 #include <algorithm>
 #include <map>
 #include <vector>
+#include <fstream>
+#include <fcntl.h
 #include "constants.h"
-#include "serial.h"
 #include "string.h"
 
 using namespace std;
@@ -26,7 +27,10 @@ class ardComm
         data* get_status();
 
     private:
-        Serial ard;
+        int fd1;
+        int fd2;
+        char * buff = new char[2];
+        int wr, rd, nbytes, tries;
 };
 
 #endif // SERIAL_H
