@@ -36,10 +36,11 @@ int main()
 {
     //construct ard-comm connection
     ardComm* s = new ardComm();
+
     //check to see if connection opened; exit otherwise
     int sstat = s->fopen();
     if(!sstat) return -1;
-    cout << "start: " << s << endl;
+    cout << "start: " << sstat << endl;
     s->set_light(2);
 
     //wait for button
