@@ -8,6 +8,7 @@
 #include <fcntl.h>
 #include "constants.h"
 #include <string.h>
+#include <iostream>
 
 using namespace std;
 
