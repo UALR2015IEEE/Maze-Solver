@@ -42,11 +42,10 @@ int main()
     cout << "start: " << sstat << endl;
 
     if(!sstat) return -1;
-    s->set_light(1);
+    s->set_light(2);
 
     //wait for button
-    while(!s->get_button());
-    delete s;
+    while(!s->get_button()) {}
     return 0;
 
     data* d = new data();
